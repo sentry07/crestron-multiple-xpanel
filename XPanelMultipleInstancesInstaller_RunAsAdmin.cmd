@@ -13,6 +13,9 @@ cd %~dp0
 rem Check first that we have admin rights before continuing
 call:check_Permissions
 
+rem Check to see if PowerShell ExecutionPolicy will allow us to run scripts
+call:Check_PowerShell
+
 rem Check to see if Crestron XPanel is even installed
 call:check_Installation
 
@@ -93,6 +96,20 @@ if not exist "C:\Program Files (x86)\Crestron\XPanel\" (
 )
 exit /b
 
+rem This checks for PowerShell execution policy
+:Check_PowerShell
+echo Checking PowerShell execution policy...
+echo New-Item -Path . -Name "execPolPass.txt" -ItemType "file" -Value "" >checkExecPol.ps1
+Powershell.exe -executionpolicy ByPass -File checkExecPol.ps1 > nul
+del checkExecPol.ps1 /q
+if not exist execPolPass.txt (
+	echo Failed: PowerShell execution policy is restricted and this script will not run.
+	echo Please read the README.MD for troubleshooting this error.
+	echo.
+	goto:end_script
+)
+del execPolPass.txt /q
+exit /b
 
 rem This is what allows me to distribute this without packaging Crestron files. Without this little gem, you would be editing the xml files by hand.
 :DoReplace
