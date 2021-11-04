@@ -26,37 +26,42 @@ if not exist "C:\Crestron XPanels" (
 	md "C:\Crestron XPanels"
 )
 
-rem Copy the existing Crestron XPanel folder into the new XPanels folder 3 times for the 3 new instances
+rem Copy the existing Crestron XPanel folder into the new XPanels folder 4 times for the 4 new instances
 if exist "C:\Program Files (x86)\Crestron\XPanel\" (
 	echo Copying XPanel files to new folder.
 	echo.
-	xcopy "C:\Program Files (x86)\Crestron\XPanel\CrestronXPanel" "C:\Crestron XPanels\CrestronXPanel-1" /E /I /Y >nul
 	xcopy "C:\Program Files (x86)\Crestron\XPanel\CrestronXPanel" "C:\Crestron XPanels\CrestronXPanel-2" /E /I /Y >nul
 	xcopy "C:\Program Files (x86)\Crestron\XPanel\CrestronXPanel" "C:\Crestron XPanels\CrestronXPanel-3" /E /I /Y >nul
+	xcopy "C:\Program Files (x86)\Crestron\XPanel\CrestronXPanel" "C:\Crestron XPanels\CrestronXPanel-4" /E /I /Y >nul
+	xcopy "C:\Program Files (x86)\Crestron\XPanel\CrestronXPanel" "C:\Crestron XPanels\CrestronXPanel-5" /E /I /Y >nul
 )
 if exist "C:\Program Files\Crestron\XPanel\" (
 	echo Copying XPanel files to new folder.
 	echo.
-	xcopy "C:\Program Files\Crestron\XPanel\CrestronXPanel" "C:\Crestron XPanels\CrestronXPanel-1" /E /I /Y >nul
 	xcopy "C:\Program Files\Crestron\XPanel\CrestronXPanel" "C:\Crestron XPanels\CrestronXPanel-2" /E /I /Y >nul
 	xcopy "C:\Program Files\Crestron\XPanel\CrestronXPanel" "C:\Crestron XPanels\CrestronXPanel-3" /E /I /Y >nul
+	xcopy "C:\Program Files\Crestron\XPanel\CrestronXPanel" "C:\Crestron XPanels\CrestronXPanel-4" /E /I /Y >nul
+	xcopy "C:\Program Files\Crestron\XPanel\CrestronXPanel" "C:\Crestron XPanels\CrestronXPanel-5" /E /I /Y >nul
 )
 
 echo Updating application.xml files.
 rem The search and replace function expects to take an existing file and output a new file with the new text so I'm renaming the file first
-ren "C:\Crestron XPanels\CrestronXPanel-1\META-INF\AIR\application.xml" application.tmp
 ren "C:\Crestron XPanels\CrestronXPanel-2\META-INF\AIR\application.xml" application.tmp
 ren "C:\Crestron XPanels\CrestronXPanel-3\META-INF\AIR\application.xml" application.tmp
+ren "C:\Crestron XPanels\CrestronXPanel-4\META-INF\AIR\application.xml" application.tmp
+ren "C:\Crestron XPanels\CrestronXPanel-5\META-INF\AIR\application.xml" application.tmp
 
 rem Changing the <id> key in the xml file is what allows us to run multiple instances of the Adobe AIR app
-call:DoReplace "<id>CrestronXPanel</id>" "<id>CrestronXPanel-1</id>" "C:\Crestron XPanels\CrestronXPanel-1\META-INF\AIR\application.tmp" "C:\Crestron XPanels\CrestronXPanel-1\META-INF\AIR\application.xml"
 call:DoReplace "<id>CrestronXPanel</id>" "<id>CrestronXPanel-2</id>" "C:\Crestron XPanels\CrestronXPanel-2\META-INF\AIR\application.tmp" "C:\Crestron XPanels\CrestronXPanel-2\META-INF\AIR\application.xml"
 call:DoReplace "<id>CrestronXPanel</id>" "<id>CrestronXPanel-3</id>" "C:\Crestron XPanels\CrestronXPanel-3\META-INF\AIR\application.tmp" "C:\Crestron XPanels\CrestronXPanel-3\META-INF\AIR\application.xml"
+call:DoReplace "<id>CrestronXPanel</id>" "<id>CrestronXPanel-4</id>" "C:\Crestron XPanels\CrestronXPanel-4\META-INF\AIR\application.tmp" "C:\Crestron XPanels\CrestronXPanel-4\META-INF\AIR\application.xml"
+call:DoReplace "<id>CrestronXPanel</id>" "<id>CrestronXPanel-5</id>" "C:\Crestron XPanels\CrestronXPanel-5\META-INF\AIR\application.tmp" "C:\Crestron XPanels\CrestronXPanel-5\META-INF\AIR\application.xml"
 
 rem Clean up the temp files from before
-del "C:\Crestron XPanels\CrestronXPanel-1\META-INF\AIR\application.tmp"
 del "C:\Crestron XPanels\CrestronXPanel-2\META-INF\AIR\application.tmp"
 del "C:\Crestron XPanels\CrestronXPanel-3\META-INF\AIR\application.tmp"
+del "C:\Crestron XPanels\CrestronXPanel-4\META-INF\AIR\application.tmp"
+del "C:\Crestron XPanels\CrestronXPanel-5\META-INF\AIR\application.tmp"
 
 rem Import the registry file that adds the new instances to the context menu
 call:DropRegFile
@@ -128,32 +133,42 @@ echo.
 echo [HKEY_CLASSES_ROOT\vtz\shell\Instance 2]
 echo.
 echo [HKEY_CLASSES_ROOT\vtz\shell\Instance 2\command]
-echo @="\"C:\\Crestron XPanels\\CrestronXPanel-1\\CrestronXPanel.exe\" \"%%1\""
+echo @="\"C:\\Crestron XPanels\\CrestronXPanel-2\\CrestronXPanel.exe\" \"%%1\""
 echo.
 echo [HKEY_CLASSES_ROOT\vtz\shell\Instance 3]
 echo.
 echo [HKEY_CLASSES_ROOT\vtz\shell\Instance 3\command]
-echo @="\"C:\\Crestron XPanels\\CrestronXPanel-2\\CrestronXPanel.exe\" \"%%1\""
+echo @="\"C:\\Crestron XPanels\\CrestronXPanel-3\\CrestronXPanel.exe\" \"%%1\""
 echo.
 echo [HKEY_CLASSES_ROOT\vtz\shell\Instance 4]
 echo.
 echo [HKEY_CLASSES_ROOT\vtz\shell\Instance 4\command]
-echo @="\"C:\\Crestron XPanels\\CrestronXPanel-3\\CrestronXPanel.exe\" \"%%1\""
+echo @="\"C:\\Crestron XPanels\\CrestronXPanel-4\\CrestronXPanel.exe\" \"%%1\""
+echo.
+echo [HKEY_CLASSES_ROOT\vtz\shell\Instance 5]
+echo.
+echo [HKEY_CLASSES_ROOT\vtz\shell\Instance 5\command]
+echo @="\"C:\\Crestron XPanels\\CrestronXPanel-5\\CrestronXPanel.exe\" \"%%1\""
 echo.
 echo [HKEY_CLASSES_ROOT\c3p\shell\Instance 2]
 echo.
 echo [HKEY_CLASSES_ROOT\c3p\shell\Instance 2\command]
-echo @="\"C:\\Crestron XPanels\\CrestronXPanel-1\\CrestronXPanel.exe\" \"%%1\""
+echo @="\"C:\\Crestron XPanels\\CrestronXPanel-2\\CrestronXPanel.exe\" \"%%1\""
 echo.
 echo [HKEY_CLASSES_ROOT\c3p\shell\Instance 3]
 echo.
 echo [HKEY_CLASSES_ROOT\c3p\shell\Instance 3\command]
-echo @="\"C:\\Crestron XPanels\\CrestronXPanel-2\\CrestronXPanel.exe\" \"%%1\""
+echo @="\"C:\\Crestron XPanels\\CrestronXPanel-3\\CrestronXPanel.exe\" \"%%1\""
 echo.
 echo [HKEY_CLASSES_ROOT\c3p\shell\Instance 4]
 echo.
 echo [HKEY_CLASSES_ROOT\c3p\shell\Instance 4\command]
-echo @="\"C:\\Crestron XPanels\\CrestronXPanel-3\\CrestronXPanel.exe\" \"%%1\""
+echo @="\"C:\\Crestron XPanels\\CrestronXPanel-4\\CrestronXPanel.exe\" \"%%1\""
+echo.
+echo [HKEY_CLASSES_ROOT\c3p\shell\Instance 5]
+echo.
+echo [HKEY_CLASSES_ROOT\c3p\shell\Instance 5\command]
+echo @="\"C:\\Crestron XPanels\\CrestronXPanel-5\\CrestronXPanel.exe\" \"%%1\""
 )>"Add_to_context.reg"
 exit /b
 

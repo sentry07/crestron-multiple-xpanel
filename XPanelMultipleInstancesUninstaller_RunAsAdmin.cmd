@@ -58,9 +58,11 @@ echo.
 echo [-HKEY_CLASSES_ROOT\vtz\shell\Instance 2]
 echo [-HKEY_CLASSES_ROOT\vtz\shell\Instance 3]
 echo [-HKEY_CLASSES_ROOT\vtz\shell\Instance 4]
+echo [-HKEY_CLASSES_ROOT\vtz\shell\Instance 5]
 echo [-HKEY_CLASSES_ROOT\c3p\shell\Instance 2]
 echo [-HKEY_CLASSES_ROOT\c3p\shell\Instance 3]
 echo [-HKEY_CLASSES_ROOT\c3p\shell\Instance 4]
+echo [-HKEY_CLASSES_ROOT\c3p\shell\Instance 5]
 )>"DelContext.reg"
 exit /b
 
